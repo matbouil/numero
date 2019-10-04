@@ -26,4 +26,7 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-
+func testConversionForTwo() {
+  let result = converter.convert(2)
+  XCTAssertEqual(result, "II", "Conversion for 2 is incorrect")
+}
