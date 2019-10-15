@@ -16,38 +16,54 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios build_for_deploy
-```
-fastlane ios build_for_deploy
-```
-Build and prepare deployment
-### ios deploy
-```
-fastlane ios deploy
-```
-Deploy to TestFlight 
-### ios build_alpha
-```
-fastlane ios build_alpha
-```
-Build an Alphatet release 
-### ios testflight_alpha
-```
-fastlane ios testflight_alpha
-```
-Upload ipa to TestFlight
 ### ios test
 ```
 fastlane ios test
 ```
 Runs all the tests
-### ios beta
+### ios build_for_deploy
 ```
-fastlane ios beta
+fastlane ios build_for_deploy
 ```
-Submit a new Beta Build to Apple TestFlight
+Build and prepare deployment
+### ios deploy_alpha
+```
+fastlane ios deploy_alpha
+```
+Deploy a new alpha version (internal) on TestFlight 
 
-This will also make sure the profile is up to date
+This action does the following:
+
+
+
+- Ensures a clean git status
+
+- Increment the build number
+
+- Build and sign the app
+
+- Upload the ipa file to hockey
+
+- Commit and push the version bump and build tag
+### ios deploy_beta
+```
+fastlane ios deploy_beta
+```
+Deploy a new beta version on TestFlight 
+
+This action does the following:
+
+
+
+- Ensures a clean git status
+
+- Increment the build number
+
+- Build and sign the app
+
+- Upload the ipa file to hockey
+
+- Commit and push the version bump and build tag
 ### ios release
 ```
 fastlane ios release
