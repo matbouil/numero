@@ -24,6 +24,35 @@ platform :ios do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
+  desc "Build and prepare deployment"
+  lane :build_for_deploy do
+    gym(scheme: ENV['SCHEME'], skip_package_ipa: true, skip_archive: true, skip_codesigning: true) # Build your app - more options available
+  end
+
+  desc "Desploy to TestFlight "
+  lane :deploy do 
+
+  	# Make sure we start off with a clean state
+  	ensure_git_status_clean
+
+  	# increment the build number from the latest uploaded build
+  	build_number = latest_testflight_build_number + 1
+  	increment_build_number({
+  		build_number: build_number
+	})
+
+  	# build and generate an ipa file
+	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+
+  	# Make sure our directory is clean, except for changes Fastlane has made
+  	clean_build_artifacts
+
+  	# Tag release and push to GitHub
+	commit_version_bump message: "Deploying version #{build_number}."
+	add_git_tag tag: version_number
+	push_to_git_remote
+  end
+
   desc "Build an Alphatet release "
   lane :build_alpha do
     # Uncomment cocoapods and carthage for Newzik target
@@ -31,7 +60,6 @@ platform :ios do
     #carthage(cache_builds: true)
     enable_automatic_code_signing
     increment_build_number
-    # match(type: "appstore") # more information: https://codesigning.guide
     gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
   
     # sh "your_script.sh"
