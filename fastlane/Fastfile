@@ -114,7 +114,7 @@ platform :ios do
 
     groups = ENV["PILOT_GROUPS"].split(",")
     ipa = "./fastlane/builds/#{ENV['APP_NAME_BETA']}.ipa"
-    pilot(changelog: :changelog,   # the :changelog is passed as input param of the deploy_beta lane
+    pilot(changelog: options[:changelog],   # the :changelog is passed as input param of the deploy_beta lane
     	distribute_external: true,
     	ipa: ipa,
     	groups: groups)
