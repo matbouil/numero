@@ -17,16 +17,22 @@ default_platform(:ios)
 
 platform :ios do
   before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
     ENV["FASTLANE_DONT_STORE_PASSWORD"] = "1"
     ENV["FASTLANE_PASSWORD"] = "Dangelo11"
     ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "yksi-xzkf-qlwt-cbzb"
 
-    # Alpha test ENV vars
-    ENV["SCHEME"] = "Freemium-Development"
-    ENV["BUNDLE_IDENTIFIER"] = "com.syncsing.cd-test"
-    ENV["APP_NAME"] = "CDTestApp newzik"
     ENV["XCODE_PROJECT"] = "Numero.xcodeproj"
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+
+    # ALPHA version ENV vars
+    ENV["SCHEME_ALPHA"] = "Freemium-Development"
+    ENV["APP_NAME_ALPHA"] = "CDTestApp newzik"
+
+    # BETA version ENV vars
+    ENV["SCHEME_BETA"] = "Freemium-Development"
+    ENV["APP_NAME_BETA"] = "CDTestApp newzik"
+
+    ENV["PILOT_GROUPS"] = "BIDON"
   end
 
   desc "Runs all the tests"
@@ -35,11 +41,11 @@ platform :ios do
   end
 
   desc "Build and prepare deployment"
-  lane :build_for_deploy do
+  lane :build_before_deploy do
   	# Uncomment cocoapods and carthage for Newzik target
     #cocoapods
     #carthage(cache_builds: true)
-    gym(scheme: ENV['SCHEME'], skip_package_ipa: true, skip_archive: true, skip_codesigning: true) # Build your app - more options available
+    gym(scheme: ENV['SCHEME_ALPHA'], skip_package_ipa: true, skip_archive: true, skip_codesigning: true) # Build your app - more options available
   end
 
   desc "Deploy a new alpha version (internal) on TestFlight "
@@ -63,11 +69,12 @@ platform :ios do
 	})
 
   	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+	gym(scheme: ENV['SCHEME_ALPHA'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
-    pilot(skip_submission: true, ipa: "./fastlane/builds/#{ENV['APP_NAME']}.ipa") # Build your app - more options available
+    ipa = "./fastlane/builds/#{ENV['APP_NAME_ALPHA']}.ipa"
+    pilot(skip_submission: true, ipa: ipa) 
 
   	# Make sure our directory is clean, except for changes Fastlane has made
   	clean_build_artifacts
@@ -79,6 +86,7 @@ platform :ios do
   end
 
   desc "Deploy a new beta version on TestFlight "
+  desc "This action takes changelog = 'Something new happened' as input parameter"
   desc "This action does the following:"
   desc ""
   desc "- Ensures a clean git status"
@@ -99,11 +107,17 @@ platform :ios do
 	})
 
   	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+	gym(scheme: ENV['SCHEME_BETA'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
-    pilot(skip_submission: true, ipa: "./fastlane/builds/#{ENV['APP_NAME']}.ipa") # Build your app - more options available
+
+    groups = ENV["PILOT_GROUPS"].split(",")
+    ipa = "./fastlane/builds/#{ENV['APP_NAME_BETA']}.ipa"
+    pilot(changelog: changelog,
+    	distribute_external: true,
+    	ipa: ipa,
+    	groups: groups)
 
   	# Make sure our directory is clean, except for changes Fastlane has made
   	clean_build_artifacts
