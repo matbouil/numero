@@ -36,12 +36,10 @@ platform :ios do
   	ensure_git_status_clean
 
   	# increment the build number from the latest uploaded build
-  	#build_number = latest_testflight_build_number + 1
-
-  	build_number = get_build_number(xcodeproj: ENV['XCODE_PROJECT']) + 1
+  	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
 
   	increment_build_number({
-  		build_number: build_number + 1
+  		build_number: new_build_number
 	})
 
   	# build and generate an ipa file
@@ -51,8 +49,8 @@ platform :ios do
   	clean_build_artifacts
 
   	# Tag release and push to GitHub
-	commit_version_bump message: "Bump version #{build_number}."
-	add_git_tag tag: "build-test-free-#{build_number}"
+	commit_version_bump message: "Bump build to #{new_build_number}."
+	add_git_tag tag: "build-test-free-#{new_build_number}"
 	push_to_git_remote
   end
 
