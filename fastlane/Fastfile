@@ -46,7 +46,7 @@ platform :ios do
 	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
 
     # Push to TestFlight
-    enable_automatic_code_signing(path: "NewzikVersion4.xcodeproj")
+    enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
     pilot(skip_submission: true, ipa: "./fastlane/builds/#{ENV['APP_NAME']}.ipa") # Build your app - more options available
 
   	# Make sure our directory is clean, except for changes Fastlane has made

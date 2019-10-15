@@ -25,7 +25,7 @@ Build and prepare deployment
 ```
 fastlane ios deploy
 ```
-Desploy to TestFlight 
+Deploy to TestFlight 
 ### ios build_alpha
 ```
 fastlane ios build_alpha
