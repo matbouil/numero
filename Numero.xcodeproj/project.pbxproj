@@ -371,7 +371,7 @@
 				DEVELOPMENT_TEAM = 8X263RTW2K;
 				INFOPLIST_FILE = Numero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Numero;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.syncsing.cd-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -388,7 +388,7 @@
 				DEVELOPMENT_TEAM = 8X263RTW2K;
 				INFOPLIST_FILE = Numero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.Numero;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.syncsing.cd-test";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
