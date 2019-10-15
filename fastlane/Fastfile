@@ -21,16 +21,36 @@ platform :ios do
     ENV["FASTLANE_PASSWORD"] = "Dangelo11"
     ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "yksi-xzkf-qlwt-cbzb"
 
+    # Alpha test ENV vars
+    ENV["SCHEME"] = "Freemium-Development"
+    ENV["BUNDLE_IDENTIFIER"] = "com.syncsing.cd-test"
+    ENV["APP_NAME"] = "CDTestApp newzik"
+    ENV["XCODE_PROJECT"] = "Numero.xcodeproj"
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
   end
 
   desc "Build and prepare deployment"
   lane :build_for_deploy do
+  	# Uncomment cocoapods and carthage for Newzik target
+    #cocoapods
+    #carthage(cache_builds: true)
     gym(scheme: ENV['SCHEME'], skip_package_ipa: true, skip_archive: true, skip_codesigning: true) # Build your app - more options available
   end
 
-  desc "Deploy to TestFlight "
-  lane :deploy do 
+  desc "Deploy a new alpha version (internal) on TestFlight "
+  desc "This action does the following:"
+  desc ""
+  desc "- Ensures a clean git status"
+  desc "- Increment the build number"
+  desc "- Build and sign the app"
+  desc "- Upload the ipa file to hockey"
+  desc "- Commit and push the version bump and build tag"
+  lane :deploy_alpha do 
 
   	# Make sure we start off with a clean state
   	ensure_git_status_clean
@@ -58,47 +78,40 @@ platform :ios do
 	push_to_git_remote
   end
 
-  desc "Build an Alphatet release "
-  lane :build_alpha do
-    # Uncomment cocoapods and carthage for Newzik target
-    #cocoapods
-    #carthage(cache_builds: true)
-    enable_automatic_code_signing
-    increment_build_number
-    gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
-  end
+  desc "Deploy a new beta version on TestFlight "
+  desc "This action does the following:"
+  desc ""
+  desc "- Ensures a clean git status"
+  desc "- Increment the build number"
+  desc "- Build and sign the app"
+  desc "- Upload the ipa file to hockey"
+  desc "- Commit and push the version bump and build tag"
+  lane :deploy_beta do 
 
-  desc "Upload ipa to TestFlight"
-  lane :testflight_alpha do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    enable_automatic_code_signing(path: "NewzikVersion4.xcodeproj")
+  	# Make sure we start off with a clean state
+  	ensure_git_status_clean
+
+  	# increment the build number from the latest uploaded build
+  	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
+
+  	increment_build_number({
+  		build_number: new_build_number
+	})
+
+  	# build and generate an ipa file
+	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+
+    # Push to TestFlight
+    enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
     pilot(skip_submission: true, ipa: "./fastlane/builds/#{ENV['APP_NAME']}.ipa") # Build your app - more options available
-    #deliver(force: true)
 
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
-  end
+  	# Make sure our directory is clean, except for changes Fastlane has made
+  	clean_build_artifacts
 
-
-  desc "Runs all the tests"
-  lane :test do
-    scan
-  end
-
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do
-    cocoapods
-    carthage(cache_builds: true)
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: ENV['SCHEME']) # Build your app - more options available
-    pilot(distribute_external:false, skip_submission:true, skip_waiting_for_build_processing:true)
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
+  	# Tag release and push to GitHub
+	commit_version_bump message: "Bump build to #{new_build_number}."
+	add_git_tag tag: "build-prod-free-#{new_build_number}"
+	push_to_git_remote
   end
 
   desc "Deploy a new version to the App Store"
