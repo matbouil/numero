@@ -51,7 +51,6 @@ platform :ios do
   	# Tag release and push to GitHub
 	commit_version_bump message: "Bump build to #{new_build_number}."
 	add_git_tag tag: "build-test-free-#{new_build_number}"
-	push_to_git_remote
 	push_to_git_remote(
       remote: "origin",         # optional, default: "origin"
       local_branch: "HEAD",  # optional, aliased by "branch", default: "master"
