@@ -29,7 +29,7 @@ platform :ios do
     gym(scheme: ENV['SCHEME'], skip_package_ipa: true, skip_archive: true, skip_codesigning: true) # Build your app - more options available
   end
 
-  desc "Desploy to TestFlight "
+  desc "Deploy to TestFlight "
   lane :deploy do 
 
   	# Make sure we start off with a clean state
@@ -45,19 +45,17 @@ platform :ios do
   	# build and generate an ipa file
 	gym(scheme: ENV['SCHEME'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
 
+    # Push to TestFlight
+    enable_automatic_code_signing(path: "NewzikVersion4.xcodeproj")
+    pilot(skip_submission: true, ipa: "./fastlane/builds/#{ENV['APP_NAME']}.ipa") # Build your app - more options available
+
   	# Make sure our directory is clean, except for changes Fastlane has made
   	clean_build_artifacts
 
   	# Tag release and push to GitHub
 	commit_version_bump message: "Bump build to #{new_build_number}."
 	add_git_tag tag: "build-test-free-#{new_build_number}"
-	push_to_git_remote(
-      remote: "origin",         # optional, default: "origin"
-      local_branch: "HEAD",  # optional, aliased by "branch", default: "master"
-      #remote_branch: "development", # optional, default is set to local_branch
-      force: true,    # optional, default: false
-      tags: true     # optional, default: true
-    )
+	push_to_git_remote
   end
 
   desc "Build an Alphatet release "
