@@ -94,7 +94,12 @@ platform :ios do
   desc "- Build and sign the app"
   desc "- Upload the ipa file to hockey"
   desc "- Commit and push the version bump and build tag"
-  lane :deploy_beta do 
+  lane :deploy_beta do |options|
+
+  	beta_changelog = "Default changelog"
+ 	if options[:changelog]
+    	beta_changelog = options[:changelog] # the :changelog is passed as input param of the deploy_beta lane
+  	end
 
   	# Make sure we start off with a clean state
   	ensure_git_status_clean
@@ -114,7 +119,7 @@ platform :ios do
 
     groups = ENV["PILOT_GROUPS"].split(",")
     ipa = "./fastlane/builds/#{ENV['APP_NAME_BETA']}.ipa"
-    pilot(changelog: options[:changelog],   # the :changelog is passed as input param of the deploy_beta lane
+    pilot(changelog: beta_changelog,
     	distribute_external: true,
     	ipa: ipa,
     	groups: groups)
