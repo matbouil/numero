@@ -21,9 +21,9 @@ or alternatively using `brew cask install fastlane`
 fastlane ios test
 ```
 Runs all the tests
-### ios build_for_deploy
+### ios build_before_deploy
 ```
-fastlane ios build_for_deploy
+fastlane ios build_before_deploy
 ```
 Build and prepare deployment
 ### ios deploy_alpha
@@ -50,6 +50,8 @@ This action does the following:
 fastlane ios deploy_beta
 ```
 Deploy a new beta version on TestFlight 
+
+This action takes changelog = 'Something new happened' as input parameter
 
 This action does the following:
 
