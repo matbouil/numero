@@ -31,7 +31,7 @@
 
 /* Begin PBXFileReference section */
 		18B65CBB20C09E8D00BFC903 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		3052E852201040F500F6F30B /* Numero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Numero.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3052E852201040F500F6F30B /* CDTestApp newzik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CDTestApp newzik.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3052E855201040F500F6F30B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3052E857201040F500F6F30B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3052E85A201040F500F6F30B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		3052E853201040F500F6F30B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3052E852201040F500F6F30B /* Numero.app */,
+				3052E852201040F500F6F30B /* CDTestApp newzik.app */,
 				3052E866201040F500F6F30B /* NumeroTests.xctest */,
 			);
 			name = Products;
@@ -125,7 +125,7 @@
 			);
 			name = Numero;
 			productName = Numero;
-			productReference = 3052E852201040F500F6F30B /* Numero.app */;
+			productReference = 3052E852201040F500F6F30B /* CDTestApp newzik.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3052E865201040F500F6F30B /* NumeroTests */ = {
@@ -368,14 +368,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8X263RTW2K;
 				INFOPLIST_FILE = Numero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.syncsing.cd-test";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "CDTestApp newzik";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -385,14 +387,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 8X263RTW2K;
 				INFOPLIST_FILE = Numero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.syncsing.cd-test";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "CDTestApp newzik";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
