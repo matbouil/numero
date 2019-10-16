@@ -122,7 +122,7 @@ platform :ios do
     pilot(changelog: beta_changelog,
     	distribute_external: true,
     	ipa: ipa,
-    	groups: groups)
+    	groups: ['BIDON']) # groups)
 
   	# Make sure our directory is clean, except for changes Fastlane has made
   	clean_build_artifacts
