@@ -1,0 +1,9 @@
+- Compatibilité iOS 13 : Newzik est désormais compatible avec la dernière version d’iOS. Mettez à jour votre appareil pour bénéficier de nos dernières fonctionnalités ! 
+- “Se connecter avec Apple” : vous pouvez maintenant utiliser votre identifiant Apple pour vous connecter à votre lecteur de partitions numérique préféré. Créer un compte Newzik n'a jamais été aussi simple ! (Nécessite iOS 13) 
+- Numérisez vos partitions : vous pouvez maintenant importer vos partitions papier en prenant simplement une photo de vos partitions. Retrouvez cette fonctionnalité dans la section d'import. (Nécessite iOS 13) 
+- Manipulez vos fichiers multimédias : avec la nouvelle fonctionnalité d’édition, vous pouvez désormais accélérer ou ralentir un fichier audio et le transposer directement depuis l’application. 
+- Comme toujours, de nombreuses corrections et ajustements mineurs. 
+
+Si vous avez des questions ou rencontrez un quelconque problème, envoyez-nous un email à contact@newzik.com.
+
+L'équipe Newzik

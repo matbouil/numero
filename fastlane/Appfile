@@ -1,4 +1,4 @@
-app_identifier(ENV['BUNDLE_IDENTIFIER']) # The bundle identifier of your app
+app_identifier("com.syncsing.cd-test") # The bundle identifier of your app
 apple_id("mbouillaud@newzik.com") # Your Apple email address
 
 itc_team_id("551052") # App Store Connect Team ID

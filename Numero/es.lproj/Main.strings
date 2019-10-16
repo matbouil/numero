@@ -1,0 +1,30 @@
+
+/* Class = "UILabel"; text = "Is the conversion correct?"; ObjectID = "42e-4e-K8e"; */
+"42e-4e-K8e.text" = "Is the conversion correct?";
+
+/* Class = "UILabel"; text = "Game Over"; ObjectID = "7h3-X8-FjK"; */
+"7h3-X8-FjK.text" = "Game Over";
+
+/* Class = "UILabel"; text = "MMMCMXCIX"; ObjectID = "8a1-5B-wGT"; */
+"8a1-5B-wGT.text" = "MMMCMXCIX";
+
+/* Class = "UIButton"; normalTitle = "❌"; ObjectID = "DhT-nH-q8P"; */
+"DhT-nH-q8P.normalTitle" = "❌";
+
+/* Class = "UILabel"; text = "↓"; ObjectID = "aq6-tM-iaS"; */
+"aq6-tM-iaS.text" = "↓";
+
+/* Class = "UILabel"; text = "0 / 10"; ObjectID = "fAa-zo-JQH"; */
+"fAa-zo-JQH.text" = "0 / 10";
+
+/* Class = "UILabel"; text = "Score"; ObjectID = "fzP-bv-typ"; */
+"fzP-bv-typ.text" = "Score";
+
+/* Class = "UIButton"; normalTitle = "✔️"; ObjectID = "h9Y-41-ea3"; */
+"h9Y-41-ea3.normalTitle" = "✔️";
+
+/* Class = "UIButton"; normalTitle = "Play Again"; ObjectID = "i3W-r1-MNV"; */
+"i3W-r1-MNV.normalTitle" = "Play Again";
+
+/* Class = "UILabel"; text = "3999"; ObjectID = "p7w-bb-xaM"; */
+"p7w-bb-xaM.text" = "3999";
