@@ -1,0 +1,9 @@
+- Compatibiliteit met iOS 13: Newzik is klaar voor de nieuwste iOS van Apple. Werk uw apparaat bij naar iOS 13 om te genieten van onze nieuwste functies!
+- Aanmelden met Apple: u kunt voortaan uw Apple ID gebruiken in uw favoriete bladmuziekreader. Het was nog nooit zo eenvoudig om een Newzik-account te maken! (Voor deze functie is iOS 13 vereist)
+- Uw bladmuziek scannen: u kunt voortaan uw papieren partituren importeren door een foto te maken van uw bladmuziek. U kunt deze functie uitproberen in het importeergedeelte. (Voor deze functie is iOS 13 vereist)
+- Uw mediabestanden bewerken: met de nieuwe bewerkfunctie voor mediabestanden van Newzik kunt u een audiobestand versnellen of vertragen. U kunt het bestand zelfs transposeren, rechtstreeks vanuit de app.
+- Net als altijd zijn er veel kleine zaken gefixt en aanpassingen doorgevoerd.
+
+Als u een vraag hebt of een bug ontdekt, kunt u ons een e-mail sturen via contact@newzik.com
+
+Het Newzik-team

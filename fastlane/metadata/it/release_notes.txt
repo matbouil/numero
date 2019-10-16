@@ -1,0 +1,9 @@
+- Compatibilità iOS 13: Newzik è pronto per il lancio dell’ultimo iOS di Apple. Aggiorna il tuo dispositivo a iOS 13 per usufruire delle nostre ultime funzioni!
+- Accedi con Apple: ora puoi usare il tuo ID Apple nel tuo lettore di spartiti preferito. Creare un account Newzik non è mai stato più semplice! (È necessario iOS 13)
+- Scansiona il tuo spartito: adesso per importare i tuoi spartiti cartacei basta fotografarli. Prova questa funzione nella sezione importazione (È necessario iOS 13)
+- Gestisci i tuoi file multimediali: con la nuova funzione Newzik per modificare i file multimediali, ora puoi accelerare o rallentare un file audio ed addirittura trasporlo, direttamente dall’app.
+- Come sempre, abbiamo risolto alcuni piccoli bug ed effettuato dei miglioramenti.
+
+In caso di domande o di bug, inviaci un’email a contact@newzik.com
+
+Il team Newzik

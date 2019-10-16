@@ -1,0 +1,9 @@
+- Kompatibel mit iOS13: Newzik ist bereit für die neueste iOS-Version von Apple. Führen Sie ein Update Ihres Gerätes auf iOS13 durch und profitieren Sie von unseren neuen Funktionen!
+- Anmeldung mit Apple: Sie können jetzt Ihre Apple ID für Ihre bevorzugte Music-Reader-App verwenden. Ein Newzik-Konto zu erstellen, war noch nie so einfach! (Erfordert iOS 13)
+- Scannen Ihrer Notenblätter: Sie können Ihre Papierpartituren jetzt importieren, indem Sie ganz einfach ein Foto von Ihrem Notenblatt machen. Probieren Sie diese Funktion einmal im Bereich „Import“ aus. (Erfordert iOS 13)
+- Bearbeiten Ihrer Mediendateien: Dank Newziks neuer Funktion zur Bearbeitung von Mediendateien können Sie Audiodateien jetzt beschleunigen oder verlangsamen und sie sogar direkt in der App transponieren.
+- Und wie immer haben wir auch einige kleine Fehlerbehebungen und Anpassungen vorgenommen.
+
+Schreiben Sie uns bei Fragen oder aufgetretenen Fehlern eine E-Mail an contact@newzik.com
+
+Ihr Newzik-Team

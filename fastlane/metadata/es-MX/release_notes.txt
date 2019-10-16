@@ -1,0 +1,9 @@
+- Compatibilidad con iOS 13: Newzik es compatible con la última actualización de Apple iOS. ¡Actualiza tu dispositivo a iOS 13 para poder utilizar las funciones nuevas!
+- Inicia sesión con Apple: ahora puedes usar el ID de Apple en tu lector de partituras favorito. ¡Crear una cuenta Newzik nunca ha sido tan fácil! (Se necesita iOS 13)
+- Escanea tus partituras: importa tus partituras haciéndoles una foto. Prueba esta función en la sección de importación. (Se necesita iOS 13)
+- Edita tus archivos multimedia: con la nueva función de edición de archivos multimedia de Newzik, puedes acelerar o ralentizar un archivo de audio, e incluso transportarlo directamente desde la aplicación.
+- Como siempre, se han resuelto varios errores y se han hecho algunos ajustes.
+
+Si tienes alguna duda o detectas algún error, mándanos un correo a contact@newzik.com 
+
+El equipo de Newzik

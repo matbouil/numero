@@ -1,0 +1,9 @@
+- iOS 13 compatibility: Newzik is ready for Apple’s latest iOS release. Update your device to iOS 13 to benefit from our latest features!
+- Sign-In with Apple: you can now use your Apple ID within your favourite sheet music reader. Creating a Newzik account has never been easier! (Requires iOS 13)
+- Scan your sheet music: you can now import your paper scores by simply taking a picture of your sheet music. Try this feature in the import section. (Requires iOS 13)
+- Manipulate your media files: with Newzik’s new media file edition feature, you can now speed up or slow down an audio file, and even transpose it, directly from the app. 
+- As always, many minor fixes and adjustments.
+
+If you have any question or encounter any bug, please send us an email to contact@newzik.com
+
+The Newzik Team
