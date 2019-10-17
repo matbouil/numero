@@ -60,7 +60,7 @@ platform :ios do
   lane :deploy_alpha do |options|
 
   	# Make sure we start off with a clean state (checkout remote)
-  	remote_branch = "master"
+  	remote_branch = "origin/master"
   	if options[:remote_branch]
     	remote_branch = options[:remote_branch]
   	end
