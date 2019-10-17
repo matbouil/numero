@@ -165,7 +165,7 @@ platform :ios do
       puts "Checkout new branch #{branchName}"
       sh("git checkout -b " + branchName)
     else
-      git_pull
+      sh("git pull origin " + branchName) 
     end
 
   	# Uncomment cocoapods and carthage for Newzik target
