@@ -161,8 +161,9 @@ platform :ios do
 
     # # Checkout remote branch if needed
     if !options[:remote_branch].nil? && options[:remote_branch] != current_branch
-      puts "Checkout new branch #{options[:remote_branch]}"
-      git_checkout(remote_branch: options[:remote_branch])  
+      branchName =  options[:remote_branch]
+      puts "Checkout new branch #{branchName}"
+      sh("git checkout -b " + branchName)
     else
       git_pull
     end
