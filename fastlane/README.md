@@ -36,7 +36,7 @@ This action does the following:
 
 
 
-- Ensures a clean git status
+- Ensures a clean git status and checkout from remote branch
 
 - Increment the build number
 
