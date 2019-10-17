@@ -57,10 +57,14 @@ platform :ios do
   desc "- Build and sign the app"
   desc "- Upload the ipa file to hockey"
   desc "- Commit and push the version bump and build tag"
-  lane :deploy_alpha do 
+  lane :deploy_alpha do |options|
 
-  	# Make sure we start off with a clean state
-  	ensure_git_status_clean
+  	# Make sure we start off with a clean state (checkout remote)
+  	remote_branch = "master"
+  	if options[:remote_branch]
+    	remote_branch = options[:remote_branch]
+  	end
+    prepare(remote_branch: remote_branch)
 
   	# increment the build number from the latest uploaded build
   	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
@@ -144,6 +148,28 @@ platform :ios do
     gym(scheme: ENV['SCHEME']) # Build your app - more options available
     deliver(force: true)
     # frameit
+  end
+
+
+  # PRIVATE LANES
+
+  # Make sure git is clean and pull/checkout remote branch
+  private_lane :prepare do |options|
+    ensure_git_status_clean
+
+    current_branch = git_branch
+
+    # # Checkout remote branch if needed
+    if !options[:remote_branch].nil? && options[:remote_branch] != current_branch
+      puts "Checkout new branch #{options[:remote_branch]}"
+      git_checkout(remote_branch: options[:remote_branch])  
+    else
+      git_pull
+    end
+
+  	# Uncomment cocoapods and carthage for Newzik target
+    #cocoapods
+    #carthage(cache_builds: true)
   end
 
   # You can define as many lanes as you want
