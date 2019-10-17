@@ -157,7 +157,8 @@ platform :ios do
   end
 
   error do |lane, exception|
-  	reset_git_repo
+  	# Discard uncommitted changes if an error occurs during the previous lane 
+  	#reset_git_repo
     # slack(
     #   message: exception.message,
     #   success: false
