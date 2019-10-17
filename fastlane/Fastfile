@@ -23,6 +23,7 @@ platform :ios do
     ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "yksi-xzkf-qlwt-cbzb"
 
     ENV["XCODE_PROJECT"] = "Numero.xcodeproj"
+    ENV["IPA_PATH"] = "./fastlane/builds"
 
     # ALPHA version ENV vars
     ENV["SCHEME_ALPHA"] = "Freemium-Development"
@@ -32,7 +33,7 @@ platform :ios do
     ENV["SCHEME_BETA"] = "Freemium-Development"
     ENV["APP_NAME_BETA"] = "CDTestApp newzik"
 
-    ENV["PILOT_GROUPS"] = "BIDON"
+    ENV["PILOT_GROUPS"] = "Betatesteurs"
   end
 
   desc "Runs all the tests"
@@ -69,11 +70,11 @@ platform :ios do
 	})
 
   	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME_ALPHA'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+	gym(scheme: ENV['SCHEME_ALPHA'], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
-    ipa = "./fastlane/builds/#{ENV['APP_NAME_ALPHA']}.ipa"
+    ipa = "#{ENV['IPA_PATH']}/#{ENV['APP_NAME_ALPHA']}.ipa"
     pilot(skip_submission: true, ipa: ipa) 
 
   	# Make sure our directory is clean, except for changes Fastlane has made
@@ -112,17 +113,18 @@ platform :ios do
 	})
 
   	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME_BETA'], xcargs: "-allowProvisioningUpdates", output_directory: "./fastlane/builds") # Build your app - more options available
+	gym(scheme: ENV['SCHEME_BETA'], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
 
     groups = ENV["PILOT_GROUPS"].split(",")
-    ipa = "./fastlane/builds/#{ENV['APP_NAME_BETA']}.ipa"
+    ipa = "#{ENV['IPA_PATH']}/#{ENV['APP_NAME_BETA']}.ipa"
+
     pilot(changelog: beta_changelog,
     	distribute_external: true,
     	ipa: ipa,
-    	groups: ['BIDON']) # groups)
+    	groups: groups)
 
   	# Make sure our directory is clean, except for changes Fastlane has made
   	clean_build_artifacts
@@ -155,6 +157,7 @@ platform :ios do
   end
 
   error do |lane, exception|
+  	reset_git_repo
     # slack(
     #   message: exception.message,
     #   success: false
