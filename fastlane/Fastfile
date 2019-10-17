@@ -161,11 +161,11 @@ platform :ios do
 
     # # Checkout remote branch if needed
     if !options[:remote_branch].nil? && options[:remote_branch] != current_branch
-      branchName =  options[:remote_branch]
+      branchName = options[:remote_branch]
       puts "Checkout new branch #{branchName}"
       sh("git checkout -b " + branchName)
     else
-      sh("git pull origin " + branchName) 
+      sh("git pull origin " + options[:remote_branch]) 
     end
 
   	# Uncomment cocoapods and carthage for Newzik target
