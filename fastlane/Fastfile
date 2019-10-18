@@ -174,7 +174,7 @@ platform :ios do
   desc "Build changelog, ipa file and upload to AppStoreConnect"
   private_lane :upload_to_appstore do |options|
 	# Build changelog from PR merge commits since last build tag
-	change_log = default_changelog(tag_prefix: options[:tag_prefix])
+	changelog = default_changelog(tag_prefix: options[:tag_prefix])
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])

@@ -42,7 +42,7 @@ This action does the following:
 
 - Build and sign the app
 
-- Upload the ipa file to hockey
+- Upload the ipa file and an automatic changelog
 
 - Commit and push the version bump and build tag
 ### ios deploy_beta
@@ -63,7 +63,7 @@ This action does the following:
 
 - Build and sign the app
 
-- Upload the ipa file to hockey
+- Upload the ipa file and an automatic changelog
 
 - Commit and push the version bump and build tag
 ### ios release
@@ -75,7 +75,9 @@ Deploy a new version to the App Store
 ```
 fastlane ios default_changelog
 ```
+Build changelog since last build tag
 
+Only merge commits will be included
 
 ----
 
