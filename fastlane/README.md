@@ -71,6 +71,11 @@ This action does the following:
 fastlane ios release
 ```
 Deploy a new version to the App Store
+### ios default_changelog
+```
+fastlane ios default_changelog
+```
+
 
 ----
 
