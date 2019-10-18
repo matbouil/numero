@@ -28,12 +28,16 @@ platform :ios do
     # ALPHA version ENV vars
     ENV["SCHEME_ALPHA"] = "Freemium-Development"
     ENV["APP_NAME_ALPHA"] = "CDTestApp newzik"
+    ENV["TAG_PREFIX_ALPHA"] = "build-test-free"
 
     # BETA version ENV vars
     ENV["SCHEME_BETA"] = "Freemium-Development"
     ENV["APP_NAME_BETA"] = "CDTestApp newzik"
+    ENV["TAG_PREFIX_BETA"] = "build-prod-free"
 
     ENV["PILOT_GROUPS"] = "Betatesteurs"
+
+
   end
 
   desc "Runs all the tests"
@@ -81,7 +85,7 @@ platform :ios do
   	build_number = get_build_number(xcodeproj: ENV['XCODE_PROJECT'])
 
 	commit_version_bump message: "Bump build to #{build_number}."
-	add_git_tag tag: "build-#{build_number}-test-free"
+	add_git_tag tag: "#{ENV['TAG_PREFIX_ALPHA']}-#{build_number}"
 	push_to_git_remote
   end
 
@@ -138,7 +142,7 @@ platform :ios do
 
   	# Tag release and push to GitHub
 	commit_version_bump message: "Bump build to #{new_build_number}."
-	add_git_tag tag: "build-prod-free-#{new_build_number}"
+	add_git_tag tag: "#{ENV['TAG_PREFIX_BETA']}-#{build_number}"
 	push_to_git_remote
   end
 
@@ -189,6 +193,7 @@ platform :ios do
   lane :default_changelog do
 	  changelog = changelog_from_git_commits(
 	    #between: [ENV['GIT_PREVIOUS_SUCCESSFUL_COMMIT'] || "HEAD^^^^^", "HEAD"],
+	    tag_match_pattern: ""
 	    pretty: "• %s",
 	    merge_commit_filtering: 'only_include_merges'
 	    )
