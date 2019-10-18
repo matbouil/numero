@@ -66,15 +66,8 @@ platform :ios do
   	end
     prepare(remote_branch: remote_branch)
 
-  	# increment the build number from the latest uploaded build
-  	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
-
-  	increment_build_number({
-  		build_number: new_build_number
-	})
-
-  	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME_ALPHA'], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
+  	# increment, build and generate an ipa file
+	increment_and_build(scheme: ENV['SCHEME_ALPHA'])
 
     # Push to TestFlight
     enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
@@ -85,8 +78,10 @@ platform :ios do
   	clean_build_artifacts
 
   	# Tag release and push to GitHub
-	commit_version_bump message: "Bump build to #{new_build_number}."
-	add_git_tag tag: "build-test-free-#{new_build_number}"
+  	build_number = get_build_number(xcodeproj: ENV['XCODE_PROJECT'])
+
+	commit_version_bump message: "Bump build to #{build_number}."
+	add_git_tag tag: "build-#{build_number}-test-free"
 	push_to_git_remote
   end
 
@@ -101,6 +96,14 @@ platform :ios do
   desc "- Commit and push the version bump and build tag"
   lane :deploy_beta do |options|
 
+  	# Make sure we start off with a clean state (checkout remote)
+  	remote_branch = "master"
+  	if options[:remote_branch]
+    	remote_branch = options[:remote_branch]
+  	end
+    prepare(remote_branch: options[:remote_branch])
+
+    # Set a changelog message from the input param
   	beta_changelog = "Default changelog"
  	if options[:changelog]
     	beta_changelog = options[:changelog] # the :changelog is passed as input param of the deploy_beta lane
@@ -150,7 +153,6 @@ platform :ios do
     # frameit
   end
 
-
   # PRIVATE LANES
 
   # Make sure git is clean and pull/checkout remote branch
@@ -171,6 +173,28 @@ platform :ios do
   	# Uncomment cocoapods and carthage for Newzik target
     #cocoapods
     #carthage(cache_builds: true)
+  end
+
+  private_lane :increment_and_build do |options|
+  	# increment the build number
+  	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
+  	increment_build_number({
+  		build_number: new_build_number
+	})
+
+  	# build and generate an ipa file
+	gym(scheme: options[:scheme], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
+  end
+
+  private_lane :default_changelog do
+	  changelog = changelog_from_git_commits(
+	    #between: [ENV['GIT_PREVIOUS_SUCCESSFUL_COMMIT'] || "HEAD^^^^^", "HEAD"],
+	    pretty: "• %s",
+	    merge_commit_filtering: 'only_include_merges'
+	    )
+	  changelog = changelog.sub(/[\u{1F300}-\u{1F6FF}]/, '')
+	  Actions.lane_context[SharedValues::FL_CHANGELOG] = changelog
+	  changelog
   end
 
   # You can define as many lanes as you want
