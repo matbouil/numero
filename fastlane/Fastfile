@@ -182,9 +182,19 @@ platform :ios do
     pilot(changelog: changelog, 
     	skip_submission: true,
     	ipa: ipa,
-    	beta_app_review_info: {
-        notes: changelog
-  		}) 
+    	demo_account_required: false,
+        distribute_external: true,
+        groups: ["BIDON"],
+        notify_external_testers: true,
+        beta_app_review_info: {
+          contact_email: "tralves@tiagoalves.dev",
+          contact_first_name: "Tiago",
+          contact_last_name: "Alves",
+          contact_phone: "+351 9xxxxxxxx",
+          demo_account_name: "",
+          demo_account_password: "",
+          notes: changelog
+      }) 
   end
 
   desc "Push a version commit message and a tag"
