@@ -59,7 +59,7 @@ platform :ios do
   desc "- Ensures a clean git status"
   desc "- Increment the build number"
   desc "- Build and sign the app"
-  desc "- Upload the ipa file to hockey"
+  desc "- Upload the ipa file and an automatic changelog"
   desc "- Commit and push the version bump and build tag"
   lane :deploy_alpha do |options|
 
@@ -71,22 +71,13 @@ platform :ios do
     prepare(remote_branch: remote_branch)
 
   	# increment, build and generate an ipa file
-	increment_and_build(scheme: ENV['SCHEME_ALPHA'])
+	new_build_number = increment_and_build(scheme: ENV['SCHEME_ALPHA'])
 
-    # Push to TestFlight
-    enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
-    ipa = "#{ENV['IPA_PATH']}/#{ENV['APP_NAME_ALPHA']}.ipa"
-    pilot(skip_submission: true, ipa: ipa) 
-
-  	# Make sure our directory is clean, except for changes Fastlane has made
-  	clean_build_artifacts
+    # Create changelog, ipa file, and push to TestFlight
+    upload_to_appstore(tag_prefix: ENV['TAG_PREFIX_ALPHA'], app_name: ENV['APP_NAME_ALPHA'])
 
   	# Tag release and push to GitHub
-  	build_number = get_build_number(xcodeproj: ENV['XCODE_PROJECT'])
-
-	commit_version_bump message: "Bump build to #{build_number}."
-	add_git_tag tag: "#{ENV['TAG_PREFIX_ALPHA']}-#{build_number}"
-	push_to_git_remote
+  	add_bump_commit_and_tag(tag_prefix: ENV['TAG_PREFIX_ALPHA'], build_number: new_build_number)
   end
 
   desc "Deploy a new beta version on TestFlight "
@@ -96,7 +87,7 @@ platform :ios do
   desc "- Ensures a clean git status"
   desc "- Increment the build number"
   desc "- Build and sign the app"
-  desc "- Upload the ipa file to hockey"
+  desc "- Upload the ipa file and an automatic changelog"
   desc "- Commit and push the version bump and build tag"
   lane :deploy_beta do |options|
 
@@ -107,43 +98,14 @@ platform :ios do
   	end
     prepare(remote_branch: options[:remote_branch])
 
-    # Set a changelog message from the input param
-  	beta_changelog = "Default changelog"
- 	if options[:changelog]
-    	beta_changelog = options[:changelog] # the :changelog is passed as input param of the deploy_beta lane
-  	end
+  	# increment, build and generate an ipa file
+	new_build_number = increment_and_build(scheme: ENV['SCHEME_BETA'])
 
-  	# Make sure we start off with a clean state
-  	ensure_git_status_clean
-
-  	# increment the build number from the latest uploaded build
-  	new_build_number = Integer(get_build_number(xcodeproj: ENV['XCODE_PROJECT'])) + 1
-
-  	increment_build_number({
-  		build_number: new_build_number
-	})
-
-  	# build and generate an ipa file
-	gym(scheme: ENV['SCHEME_BETA'], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
-
-    # Push to TestFlight
-    enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
-
-    groups = ENV["PILOT_GROUPS"].split(",")
-    ipa = "#{ENV['IPA_PATH']}/#{ENV['APP_NAME_BETA']}.ipa"
-
-    pilot(changelog: beta_changelog,
-    	distribute_external: true,
-    	ipa: ipa,
-    	groups: groups)
-
-  	# Make sure our directory is clean, except for changes Fastlane has made
-  	clean_build_artifacts
-
+    # Create changelog, ipa file, and push to TestFlight
+    upload_to_appstore(tag_prefix: ENV['TAG_PREFIX_BETA'], app_name: ENV['APP_NAME_BETA'])
+    
   	# Tag release and push to GitHub
-	commit_version_bump message: "Bump build to #{new_build_number}."
-	add_git_tag tag: "#{ENV['TAG_PREFIX_BETA']}-#{build_number}"
-	push_to_git_remote
+  	add_bump_commit_and_tag(tag_prefix: ENV['TAG_PREFIX_BETA'], build_number: new_build_number)
   end
 
   desc "Deploy a new version to the App Store"
@@ -188,18 +150,48 @@ platform :ios do
 
   	# build and generate an ipa file
 	gym(scheme: options[:scheme], xcargs: "-allowProvisioningUpdates", output_directory: ENV['IPA_PATH']) # Build your app - more options available
+ 	new_build_number
   end
 
-  lane :default_changelog do
+  desc "Build changelog since last build tag"
+  desc "Only merge commits will be included"
+  lane :default_changelog do |options|
+  	  tag_prefix = ENV['TAG_PREFIX_ALPHA']
+  	  if options[:tag_prefix]
+        tag_prefix = options[:tag_prefix]
+  	  end
 	  changelog = changelog_from_git_commits(
 	    #between: [ENV['GIT_PREVIOUS_SUCCESSFUL_COMMIT'] || "HEAD^^^^^", "HEAD"],
-	    tag_match_pattern: ""
+	    tag_match_pattern: "#{tag_prefix}*",
 	    pretty: "• %s",
 	    merge_commit_filtering: 'only_include_merges'
 	    )
 	  changelog = changelog.sub(/[\u{1F300}-\u{1F6FF}]/, '')
 	  Actions.lane_context[SharedValues::FL_CHANGELOG] = changelog
 	  changelog
+  end
+
+  desc "Build changelog, ipa file and upload to AppStoreConnect"
+  private_lane :upload_to_appstore do |options|
+	# Build changelog from PR merge commits since last build tag
+	change_log = default_changelog(tag_prefix: options[:tag_prefix])
+
+    # Push to TestFlight
+    enable_automatic_code_signing(path: ENV['XCODE_PROJECT'])
+    ipa = "#{ENV['IPA_PATH']}/#{options[:app_name]}.ipa"
+    pilot(changelog: changelog, skip_submission: true, ipa: ipa) 
+  end
+
+  desc "Push a version commit message and a tag"
+  private_lane :add_bump_commit_and_tag do |options|
+  	# Make sure our directory is clean, except for changes Fastlane has made
+  	clean_build_artifacts
+  	# Tag release and push to GitHub
+  	build_number = get_build_number(xcodeproj: ENV['XCODE_PROJECT'])
+
+	commit_version_bump message: "Bump build to #{options[:build_number]}."
+	add_git_tag tag: "#{options[:tag_prefix]}-#{options[:build_number]}"
+	push_to_git_remote
   end
 
   # You can define as many lanes as you want
