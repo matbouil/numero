@@ -37,7 +37,9 @@ platform :ios do
 
     ENV["PILOT_GROUPS"] = "Betatesteurs"
 
-
+    # Uncomment cocoapods and carthage for Newzik target
+    #cocoapods
+    #carthage(cache_builds: true)
   end
 
   desc "Runs all the tests"
@@ -106,6 +108,30 @@ platform :ios do
     
   	# Tag release and push to GitHub
   	add_bump_commit_and_tag(tag_prefix: ENV['TAG_PREFIX_BETA'], build_number: new_build_number)
+  end
+
+  desc "Deploy a Demo version on TestFlight "
+  desc "This action does the following:"
+  desc ""
+  desc "- Ensures a clean git status"
+  desc "- Increment the build number"
+  desc "- Build and sign the app"
+  desc "- Upload the ipa file and an automatic changelog"
+  desc "- Commit and push the version bump and build tag"
+  lane :deploy_demo do |options|
+
+  	# Make sure we start off with a clean state (checkout remote)
+  	remote_branch =  options[:remote_branch]
+    prepare(remote_branch: remote_branch)
+
+  	# increment, build and generate an ipa file
+	new_build_number = increment_and_build(scheme: ENV['SCHEME_ALPHA'])
+
+    # Create changelog, ipa file, and push to TestFlight
+    upload_to_appstore(tag_prefix: ENV['TAG_PREFIX_ALPHA'], app_name: ENV['APP_NAME_ALPHA'])
+
+  	# Tag release and push to GitHub
+  	add_bump_commit_and_tag(tag_prefix: ENV['TAG_PREFIX_ALPHA'], build_number: new_build_number)
   end
 
   desc "Deploy a new version to the App Store"
